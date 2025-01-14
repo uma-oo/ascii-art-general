@@ -61,21 +61,6 @@ Error Handling
 --------------
 The application is designed to handle errors gracefully. If there is an issue generating the ASCII art or exporting the file, the user will receive a relevant error message. For server errors, a 500 HTTP status code is returned along with an appropriate message.
 
-Code Structure
---------------
-The project follows a simple structure for easy understanding and maintenance:
-
-ascii-art-web-export-file\
-├── app             
-| └── handler\
-|          
-|
-├── assets          
-│   └── index.css \
-└── README.txt     
-
-- main.go: This file contains the server logic, handling ASCII art generation and file export.
-- index.html: This HTML file contains the web interface for generating ASCII art and exporting it.
 
 Good Practices Followed
 ------------------------
