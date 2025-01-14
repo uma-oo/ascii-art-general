@@ -10,11 +10,10 @@ import (
 )
 
 type Data struct {
-	Text          string
-	Banner        string
-	FormError     string
-	AsciiArt      string
-	is_downloaded bool // just to check if the user hitted the button downlaod
+	Text      string
+	Banner    string
+	FormError string
+	AsciiArt  string
 }
 
 var Pagedata = Data{}
@@ -52,6 +51,7 @@ func HandleAsciiArt(w http.ResponseWriter, r *http.Request) {
 	asciiArt, status := internal.Ascii(Pagedata.Text, Pagedata.Banner)
 	if status != 200 {
 		handleStatusCode(w, status)
+		Pagedata = Data{}
 		return
 	}
 
@@ -61,6 +61,7 @@ func HandleAsciiArt(w http.ResponseWriter, r *http.Request) {
 
 // function to serve the files and avoid the listing of directories
 func HandleAssets(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(Pagedata.FormError)
 	if !requestMethodChecker(w, r, http.MethodGet) {
 		return
 	}
@@ -83,11 +84,11 @@ func HandleAssets(w http.ResponseWriter, r *http.Request) {
 
 // function to handle the download process
 func HandleDownloads(w http.ResponseWriter, r *http.Request) {
-	// The method should be POST
+	// The method should be GET
 	if !requestMethodChecker(w, r, http.MethodGet) {
 		return
 	}
-	if Pagedata.AsciiArt != "" {
+	if Pagedata.AsciiArt != "" && Pagedata.FormError == "" {
 		w.Header().Add("Content-Type", "text/plain")
 		w.Header().Add("Content-Disposition", "attachement")
 		w.Header().Add("Content-Length", fmt.Sprint(len(Pagedata.AsciiArt)))
@@ -100,9 +101,10 @@ func HandleDownloads(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			handleStatusCode(w, http.StatusInternalServerError)
 		}
-		fmt.Println(file.Name())
 		http.ServeFile(w, r, file.Name())
 
+	} else if Pagedata.FormError != "" {
+		renderTemplate(w, "errorPage.html", http.StatusBadRequest, http.StatusBadRequest)
 	} else {
 		handleStatusCode(w, http.StatusBadRequest)
 	}
