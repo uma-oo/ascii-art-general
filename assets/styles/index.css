@@ -1,0 +1,318 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: #F5F5F5;
+    height: max-content;
+    min-height: 100vh;
+    position: relative;
+   
+}
+
+.form_container {
+    padding: 50px;
+    width: 70%;
+    margin: auto;
+}
+
+.form_container form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.form-group {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.form-group>.buttons>button {
+    font-size: medium;
+    color: #424242;
+    border: 2px dotted #424242;
+    background-color: #48CFCB;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    width: fit-content;
+    padding: 5px;
+    padding-inline: 10px;
+
+}
+button:hover {
+    background-color:#48CFCB;
+}
+
+.form-group>.buttons>button[type=reset]{
+    color: #424242;
+    border: 2px dotted #424242;
+    background-color: transparent;
+}
+
+
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.choice input {
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+textarea {
+    width: 100%;
+    text-align: left;
+    margin: auto;
+    height: 200px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 10px solid #229799;
+    border-radius: 6px;
+    background-color: #F5F5F5;
+    font-size: 15px;
+    resize: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+.form_container>form .form-group:last-child {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+h1 {
+    width: max-content;
+    margin: auto;
+    color: #424242;
+    position: static;
+    padding-top: 20px;
+    align-content: center;
+}
+
+h3 {
+    text-align: left;
+    width: max-content;
+    color: #424242;
+    border: solid transparent;
+}
+
+span {
+    font-weight: bold;
+    color: #424242;
+    border: solid transparent;
+}
+
+span:hover {
+    color: #48CFCB;
+}
+
+.disclaimer {
+    font-size: medium;
+    color: #424242;
+    border: 2px dotted #424242;
+    height: 40px;
+    border-radius: 10px;
+    font-weight: bold;
+    width: fit-content;
+    padding: 5px;
+    height: min-content;
+    padding-inline: 10px;
+}
+
+.ascii-art-container {
+    max-width: 60%;
+    width: 60%;
+    overflow: auto;
+    padding: auto;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+footer {
+    position: absolute;
+    top:100%;
+    right: 0;
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+footer>div {
+    width: max-content;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.luv {
+    width: 26px;
+    align-items: center;
+    border: solid transparent;
+    animation: lov 2s infinite;
+}
+
+footer p {
+    align-items: center;
+    color: #424242;
+    font-weight: bold;
+    border: solid transparent;
+}
+
+.love {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+}
+
+
+a {
+    all: unset;
+    text-decoration: underline;
+    color: #229799;
+}
+
+a:hover {
+    color: #48CFCB;
+    cursor: pointer;
+}
+
+
+/* This is for the button of the export file  */
+.download > a{
+    all: unset;
+    text-decoration: none;
+    color: #424242;
+    
+}
+
+
+
+
+input[type=radio] {
+    appearance: inherit;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #424242;
+    border-radius: 50%;
+    cursor: pointer;
+    align-items: center;
+}
+
+input[type=radio]:checked {
+    background-color: #48CFCB;
+}
+
+label {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    gap: 4px;
+}
+
+.error {
+    text-align: center;
+    width: max-content;
+    max-width: 60%;
+    margin: auto;
+}
+
+h3>.lien {
+    color: #229799;
+    text-align: center;
+    width: max-content;
+    max-width: 60%;
+    margin: auto;
+}
+
+/* for responsive design */
+@media screen and (max-width: 600px) {
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .form_container,
+    .form-group {
+        padding: 20px 0px;
+        width: 100%;
+    }
+
+    .form_container form {
+        gap: 5px;
+    }
+
+    .form_container>form .form-group:last-child {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .error {
+
+        text-align: center;
+        width: max-content;
+        max-width: 100%;
+        margin: auto;
+        padding: 5px;
+        font-size: medium;
+    }
+    
+    
+}
+
+@media screen and (max-width: 1000px) {
+    .form_container,
+    .form-group {
+        width: 80%;
+    }
+}
+
+/* animation */
+@keyframes lov {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* scroll bar width */
+.ascii-art-container::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+/*scroll bar  Track */
+.ascii-art-container::-webkit-scrollbar-track {
+    background: transparent;
+    
+}
+
+/* Handle */
+.ascii-art-container::-webkit-scrollbar-thumb {
+    background: #424242;
+    
+}

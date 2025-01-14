@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/assets/styles/index.css" rel="stylesheet">
+  <title>Error</title>
+</head>
+<body>
+  <main>
+    <div class="error">
+      {{if eq . 400 }} <h1>Bad Request 400 </h1> 
+      {{else if eq . 403}} <h1>Access Forbidden 403</h1>
+      {{else if eq . 404}} <h1>Not Found 404</h1>
+      {{else if eq . 405}} <h1>Method Not allowed 405</h1>
+      {{else if eq . 500}} <h1>Internal Server Error 500</h1>
+      {{end}}
+      <br>
+      <a class="error lien" href='http://localhost:6500/'>Go back to the Home page!</a>
+    </div>
+  </main>
+  <footer>
+    <div>
+      <p>made with </p>
+      <img class="luv moving" src="/assets/images/love.png" alt="love">
+      <p>by </p>
+    </div>
+      <div class="authors">
+        <p><a>ooumayma</a> &</p>
+        <p><a href="https://github.com/idmossab" target="_blank">midbenke</a> &</p>
+        <p><a href="https://github.com/DarkMethoss" target="_blank">aayoubst</a></p>
+      </div>
+  </footer>
+</body>
+</html>
