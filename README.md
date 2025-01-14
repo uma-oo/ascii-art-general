@@ -7,6 +7,12 @@ Ascii-Art-Web-Export is a web application that allows users to generate ASCII ar
 
 This project is built with Go, following best practices for HTTP handling, file export, and error management.
 
+
+## Authors:
+  **ooumayma**\
+  **aayoubst**
+  
+
 Features
 --------
 - ASCII Art Export: Users can generate ASCII art and export the result in a .txt file.
@@ -59,14 +65,14 @@ Code Structure
 --------------
 The project follows a simple structure for easy understanding and maintenance:
 
-ascii-art-web-export-file/
-├── app                # Main folder that contains the golang code and the main.go file
-| └── handler 
-|   :
-|   :  
-├── assets/            # Static assets (CSS, Images etc.)
-│   └── index.css   
-└── README.txt         # Project documentation
+ascii-art-web-export-file\
+├── app             
+| └── handler\
+|          
+|
+├── assets          
+│   └── index.css \
+└── README.txt     
 
 - main.go: This file contains the server logic, handling ASCII art generation and file export.
 - index.html: This HTML file contains the web interface for generating ASCII art and exporting it.
