@@ -8,11 +8,14 @@ import (
 	"asciiWeb/handler"
 )
 
+var data handler.Data
+
 func main() {
+
+	http.HandleFunc("/ascii-art", data.HandleAsciiArt())
+	http.HandleFunc("/download", data.HandleDownloads(&data))
 	http.HandleFunc("/assets/", handler.HandleAssets)
 	http.HandleFunc("/", handler.HandleMainPage)
-	http.HandleFunc("/ascii-art", handler.HandleAsciiArt)
-	http.HandleFunc("/download", handler.HandleDownloads)
-	fmt.Println("Server starting at http://localhost:6500")
+	fmt.Println("Server starting at http://localhost:6500")       
 	log.Fatal(http.ListenAndServe(":6500", nil))
 }

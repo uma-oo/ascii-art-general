@@ -42,7 +42,7 @@
             <button type="submit">SUBMIT</button>
             <button type="reset" onclick="location.href= 'http://localhost:6500/'">CLEAR</button>
             <!-- the <i></i> is where the icon is added so  -->
-            {{if ne .AsciiArt ""}} <button class="download"><a href="http://localhost:6500/download"><i class="fa fa-download"></i> DOWNLOAD</a></button> {{end}}
+            {{if ne .AsciiArt ""}} <button class="download"><i class="fa fa-download"><a href="http://localhost:6500/download"> DOWNLOAD</a></i></button> {{end}}
           </div>
           <div {{if ne .FormError "" }} class="disclaimer" {{end}}>{{.FormError}}</div>
         </div>

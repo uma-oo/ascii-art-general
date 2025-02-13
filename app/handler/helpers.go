@@ -9,6 +9,13 @@ import (
 	"asciiWeb/internal"
 )
 
+type Data struct {
+	Text      string
+	Banner    string
+	FormError string
+	AsciiArt  string
+}
+
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}, status int) {
 	t, err := template.ParseFiles("templates/" + tmpl)
 	if err != nil {
@@ -28,31 +35,32 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}, status
 
 func requestMethodChecker(w http.ResponseWriter, r *http.Request, method string) bool {
 	if r.Method != method {
-		handleStatusCode(w, http.StatusMethodNotAllowed)
+		handleStatusCode(w, http.StatusMethodNotAllowed, nil)
 		return false
 	}
 	return true
 }
 
-func extractFormData(r *http.Request) int {
+func extractFormData(r *http.Request) (int, *Data) {
 	err := r.ParseForm()
 	if err != nil {
-		return 400
+		return 400, nil
 	}
 	text := r.FormValue("text")
 	banner := r.FormValue("banner")
+	pagedata := NewData()
 	if textReg := regexp.MustCompile(`^\r\n+`); textReg.MatchString(text) {
-		Pagedata.Text = "\r\n" + text
+		pagedata.Text = "\r\n" + text
 	} else {
-		Pagedata.Text = text
+		pagedata.Text = text
 	}
-	Pagedata.Banner = banner
-	return 200
+	pagedata.Banner = banner
+	return 200, pagedata
 }
 
-func validateFormData() (status int) {
-	Pagedata.FormError = internal.UserInputChecker(Pagedata.Text)
-	if !IsBanner(Pagedata.Banner) || Pagedata.FormError != "" {
+func validateFormData(pageData *Data) (status int) {
+	pageData.FormError = internal.UserInputChecker(pageData.Text)
+	if !IsBanner(pageData.Banner) || pageData.FormError != "" {
 		return 400
 	}
 	return 200
@@ -62,31 +70,26 @@ func IsBanner(banner string) bool {
 	return banner == "standard" || banner == "shadow" || banner == "thinkertoy"
 }
 
-func handleStatusCode(w http.ResponseWriter, status int) {
+func handleStatusCode(w http.ResponseWriter, status int, pageData *Data) {
 	switch status {
 	case 200:
-		renderTemplate(w, "index.html", Pagedata, status)
+		renderTemplate(w, "index.html", pageData, status)
 	case 400:
-		if Pagedata.FormError != "" {
-			renderTemplate(w, "index.html", Pagedata, status)
+		if  pageData!=nil && pageData.FormError != "" {
+			renderTemplate(w, "index.html", pageData, status)
 		} else {
 			renderTemplate(w, "errorPage.html", status, status)
 		}
-
 	default:
 		renderTemplate(w, "errorPage.html", status, status)
 	}
 }
 
-// function written just to understand how the os.Stat works
-
-// func CheckPaths(path string) {
-// 	file_info, err := os.Stat(path)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-
-// 	fmt.Println(file_info.IsDir())
-// 	fmt.Println(file_info.Name())
-
-// }
+func NewData() *Data {
+	return &Data{
+		Text:      "",
+		Banner:    "",
+		FormError: "",
+		AsciiArt:  "",
+	}
+}
