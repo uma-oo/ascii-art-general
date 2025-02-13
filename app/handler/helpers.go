@@ -16,6 +16,18 @@ type Data struct {
 	AsciiArt  string
 }
 
+
+// Constructor of the type 
+func NewData() *Data {
+	return &Data{
+		Text:      "",
+		Banner:    "",
+		FormError: "",
+		AsciiArt:  "",
+	}
+}
+ 
+
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}, status int) {
 	t, err := template.ParseFiles("templates/" + tmpl)
 	if err != nil {
@@ -85,11 +97,3 @@ func handleStatusCode(w http.ResponseWriter, status int, pageData *Data) {
 	}
 }
 
-func NewData() *Data {
-	return &Data{
-		Text:      "",
-		Banner:    "",
-		FormError: "",
-		AsciiArt:  "",
-	}
-}
