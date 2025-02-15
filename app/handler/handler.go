@@ -23,29 +23,62 @@ func HandleMainPage(w http.ResponseWriter, r *http.Request) {
 }
 
 // handler for the path "/ascii-art
-func (D *Data) HandleAsciiArt() http.HandlerFunc {
+
+// it does not return anything :=)
+func HandleAsciiArt() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if !requestMethodChecker(w, r, http.MethodPost) {
 			return
 		}
-		status, D := extractFormData(r)
+		status, data := extractFormData(r)
 		if status != 200 {
-			handleStatusCode(w, status, D)
+			handleStatusCode(w, status, data)
 			return
 		}
-		if status = validateFormData(D); status != 200 {
-			handleStatusCode(w, status, D)
+		if status = validateFormData(data); status != 200 {
+			handleStatusCode(w, status, data)
 			return
 		}
 
-		asciiArt, status := internal.Ascii(D.Text, D.Banner)
+		asciiArt, status := internal.Ascii(data.Text, data.Banner)
 		if status != 200 {
-			handleStatusCode(w, status, D)
+			handleStatusCode(w, status, data)
 		}
+		data.AsciiArt = asciiArt
+		if data.Download {
+			data.HandleDownloads(w, r)
+			return
+		}
+		renderTemplate(w, "index.html", data, http.StatusOK)
+	}
+}
 
-		D.AsciiArt = asciiArt
-        fmt.Printf("D inside the ascii art handler : %v\n", D)
-		renderTemplate(w, "index.html", D, http.StatusOK)
+// function to handle the download process
+func (D *Data) HandleDownloads(w http.ResponseWriter, r *http.Request) {
+	// The method should be GET
+	fmt.Printf("\"hna\": %v\n", "hna")
+	if D.AsciiArt != "" && D.FormError == "" {
+		w.Header().Add("Content-Type", "text/plain")
+		w.Header().Add("Content-Disposition", "attachement")
+		w.Header().Add("Content-Length", fmt.Sprint(len(D.AsciiArt)))
+		file, err := os.Create("ascii-art.txt")
+		if err != nil {
+			renderTemplate(w, "errorPage.html", http.StatusInternalServerError, http.StatusInternalServerError)
+			return
+		}
+		err = os.WriteFile(file.Name(), []byte(D.AsciiArt), 0o644)
+		if err != nil {
+			renderTemplate(w, "errorPage.html", http.StatusInternalServerError, http.StatusInternalServerError)
+			return
+		}
+		http.ServeFile(w, r, file.Name())
+
+	} else if D.FormError != "" {
+		renderTemplate(w, "errorPage.html", http.StatusBadRequest, http.StatusBadRequest)
+		return
+	} else {
+		renderTemplate(w, "errorPage.html", http.StatusBadRequest, http.StatusBadRequest)
+		return
 	}
 }
 
@@ -67,43 +100,6 @@ func HandleAssets(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			http.ServeFile(w, r, r.URL.Path[1:])
-		}
-	}
-}
-
-// function to handle the download process
-func (D *Data) HandleDownloads(Data *Data) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		// The method should be GET
-		fmt.Printf("d: inside downlaods %v\n", D)
-		fmt.Printf("data: inside downlaods %v\n", Data)
-		if !requestMethodChecker(w, r, http.MethodGet) {
-			renderTemplate(w, "errorPage.html", http.StatusMethodNotAllowed, http.StatusMethodNotAllowed)
-			return
-		}
-
-		if D.AsciiArt != "" && D.FormError == "" {
-			w.Header().Add("Content-Type", "text/plain")
-			w.Header().Add("Content-Disposition", "attachement")
-			w.Header().Add("Content-Length", fmt.Sprint(len(D.AsciiArt)))
-			file, err := os.Create("ascii-art.txt")
-			if err != nil {
-				renderTemplate(w, "errorPage.html", http.StatusInternalServerError, http.StatusInternalServerError)
-				return
-			}
-			err = os.WriteFile(file.Name(), []byte(D.AsciiArt), 0o644)
-			if err != nil {
-				renderTemplate(w, "errorPage.html", http.StatusInternalServerError, http.StatusInternalServerError)
-				return
-			}
-			http.ServeFile(w, r, file.Name())
-
-		} else if D.FormError != "" {
-			renderTemplate(w, "errorPage.html", http.StatusBadRequest, http.StatusBadRequest)
-			return
-		} else {
-			renderTemplate(w, "errorPage.html", http.StatusBadRequest, http.StatusBadRequest)
-			return
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"bytes"
 	"fmt"
 	"net/http"
 	"regexp"
@@ -14,10 +15,10 @@ type Data struct {
 	Banner    string
 	FormError string
 	AsciiArt  string
+	Download  bool
 }
 
-
-// Constructor of the type 
+// Constructor of the type
 func NewData() *Data {
 	return &Data{
 		Text:      "",
@@ -26,9 +27,9 @@ func NewData() *Data {
 		AsciiArt:  "",
 	}
 }
- 
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}, status int) {
+     var buf bytes.Buffer
 	t, err := template.ParseFiles("templates/" + tmpl)
 	if err != nil {
 		fmt.Println(err)
@@ -37,12 +38,13 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}, status
 		return
 	}
 	w.WriteHeader(status)
-	err = t.ExecuteTemplate(w, tmpl, data)
+	err = t.ExecuteTemplate(&buf, tmpl, data)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintln(w, "<h1 style='color: #424242; text-align:center'>Internal server Error 500</h1>")
 		return
 	}
+	w.Write(buf.Bytes())
 }
 
 func requestMethodChecker(w http.ResponseWriter, r *http.Request, method string) bool {
@@ -60,11 +62,15 @@ func extractFormData(r *http.Request) (int, *Data) {
 	}
 	text := r.FormValue("text")
 	banner := r.FormValue("banner")
+	download := r.FormValue("want_to_download")
 	pagedata := NewData()
 	if textReg := regexp.MustCompile(`^\r\n+`); textReg.MatchString(text) {
 		pagedata.Text = "\r\n" + text
 	} else {
 		pagedata.Text = text
+	}
+	if download == "true" {
+		pagedata.Download = true
 	}
 	pagedata.Banner = banner
 	return 200, pagedata
@@ -87,7 +93,7 @@ func handleStatusCode(w http.ResponseWriter, status int, pageData *Data) {
 	case 200:
 		renderTemplate(w, "index.html", pageData, status)
 	case 400:
-		if  pageData!=nil && pageData.FormError != "" {
+		if pageData != nil && pageData.FormError != "" {
 			renderTemplate(w, "index.html", pageData, status)
 		} else {
 			renderTemplate(w, "errorPage.html", status, status)
@@ -96,4 +102,3 @@ func handleStatusCode(w http.ResponseWriter, status int, pageData *Data) {
 		renderTemplate(w, "errorPage.html", status, status)
 	}
 }
-

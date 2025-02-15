@@ -245,6 +245,16 @@ h3>.lien {
     margin: auto;
 }
 
+.want_to_download {
+    cursor: pointer;
+    input {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+
+
 /* for responsive design */
 @media screen and (max-width: 600px) {
     body {

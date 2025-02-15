@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	var data handler.Data
-	http.HandleFunc("/ascii-art", data.HandleAsciiArt())
-	http.HandleFunc("/download", data.HandleDownloads(&data))
+
+	http.HandleFunc("/ascii-art", handler.HandleAsciiArt())
+	// http.HandleFunc("/download", ascii_art.HandleDownloads())
 	http.HandleFunc("/assets/", handler.HandleAssets)
 	http.HandleFunc("/", handler.HandleMainPage)
 	fmt.Println("Server starting at http://localhost:6500")
