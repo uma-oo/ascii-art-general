@@ -3,6 +3,7 @@ package handler
 import (
 	"bytes"
 	"fmt"
+	"html"
 	"net/http"
 	"regexp"
 	"text/template"
@@ -60,7 +61,7 @@ func extractFormData(r *http.Request) (int, *Data) {
 	if err != nil {
 		return 400, nil
 	}
-	text := r.FormValue("text")
+	text := html.EscapeString(r.FormValue("text"))
 	banner := r.FormValue("banner")
 	download := r.FormValue("want_to_download")
 	pagedata := NewData()

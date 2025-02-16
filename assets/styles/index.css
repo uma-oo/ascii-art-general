@@ -10,7 +10,7 @@ body {
     height: max-content;
     min-height: 100vh;
     position: relative;
-   
+
 }
 
 .form_container {
@@ -46,11 +46,16 @@ body {
     padding-inline: 10px;
 
 }
-button:hover {
-    background-color:#48CFCB;
+
+/* button:hover {
+    background-color: #48CFCB;
+} */
+
+.want_to_download:hover {
+    background-color: #48CFCB !important;
 }
 
-.form-group>.buttons>button[type=reset]{
+.form-group>.buttons>button[type=reset] {
     color: #424242;
     border: 2px dotted #424242;
     background-color: transparent;
@@ -148,7 +153,7 @@ span:hover {
 
 footer {
     position: absolute;
-    top:100%;
+    top: 100%;
     right: 0;
     width: 100%;
     padding: 20px 0;
@@ -199,11 +204,11 @@ a:hover {
 
 
 /* This is for the button of the export file  */
-.download >i > a {
+.download>i>a {
     all: unset;
     text-decoration: none;
     color: #424242;
-    
+
 }
 
 
@@ -246,13 +251,28 @@ h3>.lien {
 }
 
 .want_to_download {
+    width: max-content;
     cursor: pointer;
-    input {
-        width: 20px;
-        height: 20px;
+    color: #424242;
+    border: 2px dotted #424242;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 5px 18px 5px 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    h3 {
+        text-align: left;
+        width: max-content;
+        color: #424242;
+        border: solid transparent;
+    }
+
+    i {
+        font-size: 20px;
     }
 }
-
 
 
 /* for responsive design */
@@ -276,6 +296,7 @@ h3>.lien {
         flex-direction: column;
         gap: 10px;
     }
+
     .error {
 
         text-align: center;
@@ -285,11 +306,12 @@ h3>.lien {
         padding: 5px;
         font-size: medium;
     }
-    
-    
+
+
 }
 
 @media screen and (max-width: 1000px) {
+
     .form_container,
     .form-group {
         width: 80%;
@@ -301,9 +323,11 @@ h3>.lien {
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.5);
     }
+
     100% {
         transform: scale(1);
     }
@@ -318,11 +342,11 @@ h3>.lien {
 /*scroll bar  Track */
 .ascii-art-container::-webkit-scrollbar-track {
     background: transparent;
-    
+
 }
 
 /* Handle */
 .ascii-art-container::-webkit-scrollbar-thumb {
     background: #424242;
-    
+
 }

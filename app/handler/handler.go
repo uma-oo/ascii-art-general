@@ -56,7 +56,6 @@ func HandleAsciiArt() http.HandlerFunc {
 // function to handle the download process
 func (D *Data) HandleDownloads(w http.ResponseWriter, r *http.Request) {
 	// The method should be GET
-	fmt.Printf("\"hna\": %v\n", "hna")
 	if D.AsciiArt != "" && D.FormError == "" {
 		w.Header().Add("Content-Type", "text/plain")
 		w.Header().Add("Content-Disposition", "attachement")

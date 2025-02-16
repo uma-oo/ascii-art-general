@@ -38,15 +38,16 @@
           </label>
           <br>
           <label for="want_to_download" class="want_to_download">
-            <input type="submit" name="want_to_download" id="want_to_download" value="">
-            <h3>Download Result</h3>
+            <input type="submit" name="want_to_download" id="want_to_download" value="true" hidden>
+            <i class="fa fa-download"></i>    
+            <h3>Download</h3>
           </label>
 
         </div>
         <div class="form-group">
           <div class="buttons">
             <button type="submit">SUBMIT</button>
-            <button type="reset" onclick="location.href= 'http://localhost:6500/'">CLEAR</button>
+            <button type="reset" onclick="location.href= 'http://localhost:6500/'" class="colored">CLEAR</button>
             <!-- the <i></i> is where the icon is added so  -->
             <!-- {{if ne .AsciiArt ""}} <button type="submit" class="download"><i class="fa fa-download"><a href="/download?id={{.}}">
                   DOWNLOAD</a></i></button> {{end}} -->
